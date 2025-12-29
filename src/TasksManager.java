@@ -29,9 +29,10 @@ public class TasksManager {
 
     public void getTopTask() {
         if (taskPQ.peek() != null) {
-            taskPQ.peek().printTaskDetails();
-        } else {
-            System.out.println("No top task exists...there's no tasks added yet!");
+            System.out.print(Main.ConsoleStyles.WHITE_BG_HIGH + Main.ConsoleStyles.BLUE_HIGH); //TODO: REMOVE COLOR SCHEME - TEMPORARY
+            taskPQ.peek().printTaskDetails(); //reset in this method here
+        } else { //handled in main as well for now - this case won't be hit in CLI Version
+            System.out.println(Main.ConsoleStyles.WHITE_BG_HIGH + Main.ConsoleStyles.GREEN_HIGH + "No top task exists...there's no tasks added yet!");
         }
     } //todo: separate this getTopTask from actual getter for top task if needed
 
@@ -71,11 +72,13 @@ public class TasksManager {
     }
 
     // need a print tasks list, marked completed list,
+    // TODO: PRINT BASED ON PRIORITY EFFICIENTLY
     public void printTasks() {
         HashMap<String, Task> map = this.getMap();
         int count = 1;
         for (Map.Entry<String, Task> E : map.entrySet()) {
-            System.out.println("\t Task Number " + count + ": " + E.getKey());
+            System.out.println(Main.ConsoleStyles.WHITE_BG_HIGH +
+                    Main.ConsoleStyles.BLUE_BOLD_HIGH + "Task #" + count + Main.ConsoleStyles.PURPLE_HIGH + "\t");
             E.getValue().printTaskDetails();
             count++;
         }

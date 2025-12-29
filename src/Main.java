@@ -2,6 +2,7 @@ import java.io.Console;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         TasksManager tm = new TasksManager();
-        System.out.println("Welcome.\nToday's date is: " + LocalDate.now()); //checking LD.Now();
+        System.out.println(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "Welcome.\nToday's date is: " + LocalDate.now() + "\n" + ConsoleStyles.RESET); //checking LD.Now();
 
         boolean running = true;
         while (running) {
@@ -22,89 +23,95 @@ public class Main {
             switch (choice) {
                 case "1": // Add task
                     try {
-                        System.out.print("Task name: ");
+                        System.out.print(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "Task name: " + ConsoleStyles.RESET);
                         String name = scanner.nextLine();
                         String tType = "";  //scanner.nextLine();
                         Set<String> validTpes = populateSet(new HashSet<String>());
                         while (true) {
-                            System.out.print("Task type: ");
+                            System.out.print(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "Task type: " + ConsoleStyles.RESET);
                             tType = scanner.nextLine().trim().toLowerCase();
                             if (validTpes.contains(tType)) {
                                 break;
                             } else {
-                                System.out.println("Error: Please use aca/academic, per/personal, or pro/professional");
+                                System.out.println(ConsoleStyles.YELLOW_BG_HIGH + "Error: Please use aca/academic, per/personal, or pro/professional" + ConsoleStyles.RESET);
                             }
                         }
-
                         int importance = -1;
                         while (true) {
                             try {
-                                System.out.print("Importance (1-10): ");
+                                System.out.print(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "Please enter this task importance (1-10): ");
                                 importance = Integer.parseInt(scanner.nextLine());
                                 if (importance < 10 && importance > 0) {
                                     break;
                                 } else {
-                                    System.out.println("Error: Please enter number between 1 to 10 (inclusive)");
+                                    System.out.println(ConsoleStyles.YELLOW_BG_HIGH
+                                            + "Error: Please enter number between 1 to 10 (inclusive)" + ConsoleStyles.RESET);
                                 }
                             } catch (NumberFormatException exception) {
-                                System.out.println("Please enter a valid integer number.");
+                                System.out.println(ConsoleStyles.RED_BG_HIGH + "Please enter a valid integer number." + ConsoleStyles.RESET);
                             }
                         }
-
                         int relevance = -1; //Integer.parseInt(scanner.nextLine());
                         while (true) {
                             try {
-                                System.out.print("Relevance (1-10): ");
+                                System.out.print(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "Please enter this task's relevance (1-10): " + ConsoleStyles.RESET);
                                 relevance = Integer.parseInt(scanner.nextLine());
                                 if (relevance < 10 && relevance > 0) {
                                     break;
                                 } else {
-                                    System.out.println("Error: Please enter number between 1 to 10 (inclusive)");
+                                    System.out.println(ConsoleStyles.RED_BG +
+                                            "Error: Please enter number between 1 to 10 (inclusive)" + ConsoleStyles.RESET);
                                 }
                             } catch (NumberFormatException exception) {
-                                System.out.println("Please enter a valid integer number.");
+                                System.out.println(ConsoleStyles.RED_BG_HIGH + "Please enter a valid integer number.");
                             }
                         }
-                        // TODO: Handle "no-date" given
-                        System.out.print("Deadline (YYYY-MM-DD): ");
+                        System.out.print(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "Deadline (YYYY-MM-DD): " + ConsoleStyles.RESET);
                         LocalDate deadline = LocalDate.parse(scanner.nextLine());
-                        System.out.print("Want to add a description? Y/N");
+                        System.out.print(ConsoleStyles.WHITE_BG + ConsoleStyles.BLACK_UNDERLINE + ConsoleStyles.WHITE_HIGH +
+                                "Would you like to add a description for this task? Y/N " + ConsoleStyles.RESET);
                         String wantDesc = scanner.nextLine();
                         if (wantDesc.equalsIgnoreCase("Y")) {
-                            System.out.print("Type Description: ");
+                            System.out.print(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "Type task description below: " + ConsoleStyles.RESET + "\n");
                             String desc = scanner.nextLine();
                             tm.addTask(name, tType, importance, relevance, deadline, desc);
                         } else {
                             tm.addTask(name, tType, importance, relevance, deadline);
-                            System.out.println("✅ Task added.");
+                            System.out.println(ConsoleStyles.GREEN_BG + "Task successfully added." + ConsoleStyles.RESET);
                         }
                     } catch (DateTimeParseException e) {
-                        System.out.println("❌ Invalid date format. Please use YYYY-MM-DD.");
+                        System.out.println(ConsoleStyles.RED_BG_HIGH + "Error: Invalid date format. Please use YYYY-MM-DD." + ConsoleStyles.RESET);
                     } catch (NumberFormatException e) {
-                        System.out.println("❌ Urgency and importance must be numbers.");
+                        System.out.println(ConsoleStyles.RED_BG_HIGH + "Error: Urgency and importance must be numbers." + ConsoleStyles.RESET);
                     }
                     break;
 
                 case "2": // Remove task - TODO: ACCOUNT FOR LOWERCASE AND SPECIFY TO USER NAME IS NEEDED EXPLICITLY, TRIM INPUT AS WELL (MAINTAINING CONSISTENCY)
                     if (tm.getPQ().isEmpty()) {
-                        System.out.println("No task(s) exist currently, add a task first please.");
+                        System.out.println(ConsoleStyles.YELLOW_BG + "No task(s) exist currently, add a task first please." + ConsoleStyles.RESET);
                         break;
                     }
                     System.out.print("Enter task name to remove: ");
                     String removeName = scanner.nextLine().trim();
                     try {
                         tm.removeTask(removeName);
-                        System.out.println("✅ Task removed.");
+                        System.out.println(ConsoleStyles.GREEN_BG + " Task successfully removed." + ConsoleStyles.RESET);
                     } catch (Exception e) { //extra check although already checked no tasks added (empty pq)
-                        System.out.println("Uh Oh: " + e.getMessage());
+                        System.out.println(ConsoleStyles.RED_BG_HIGH + "Error in removing task: " +
+                                e.getMessage() + ConsoleStyles.RESET);
                     }
                     break;
 
                 case "3": // View top task
-                    //todo: confirm case of no tasks is handled
+                    if (tm.getPQ().isEmpty()) {
+                        System.out.println(ConsoleStyles.YELLOW_BG +
+                                "Good and bad news... No task(s) exist currently, add a task first please." +
+                                ConsoleStyles.RESET + "\n");
+                        break;
+                    }
                  /*   if (tm.getTopTask() != null) { */
-                        System.out.print(" Your #1 priority: \n");
-                        tm.getTopTask();
+                        System.out.print(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLUE_BOLD + " Your #1 priority: \n" + ConsoleStyles.RESET);
+                        tm.getTopTask(); //Color consistency broken - Fixd
                         System.out.println();
                    /* } else {
                         System.out.println(" Congrats! No tasks available.");
@@ -113,20 +120,23 @@ public class Main {
 
                 case "4": // View all tasks
                     if (tm.getPQ().isEmpty()) {
-                        System.out.println(" NICE! No tasks available.");
+                        System.out.println(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + ConsoleStyles.GREEN_BOLD_HIGH +
+                                "Excellent! No tasks available. \n" + ConsoleStyles.RESET);
                     } else {
-                        System.out.println("All tasks:");
+                        System.out.println(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLUE_BOLD + "All tasks: \n" + ConsoleStyles.RESET);
                         tm.printTasks();
+                        System.out.println();
                     }
                     break;
 
                 case "5": // Exiting
                     running = false;
-                    System.out.println("Thanks for using TaskRise, please take care!");
+                    System.out.println(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + ConsoleStyles.GREEN_BOLD_HIGH +
+                            "Thanks for using TaskRise, please take care!" + ConsoleStyles.RESET);
                     break;
 
                 default:
-                    System.out.println("UH OH! Invalid option, try again.");
+                    System.out.println(ConsoleStyles.YELLOW_BG_HIGH + "UH OH! Invalid option, try again." + ConsoleStyles.RESET);
             }
         }
         scanner.close();
@@ -143,20 +153,20 @@ public class Main {
     }
 
     private static void startupMessage() {
-        System.out.println(ConsoleStyles.CYAN_BG_HIGH + ConsoleStyles.GREEN_BOLD_HIGH + "\n=== Task Rise ===" + ConsoleStyles.RESET);
-        System.out.println(ConsoleStyles.WHITE_BG + ConsoleStyles.BLACK_UNDERLINE + "1. Add task" + ConsoleStyles.RESET);
-        System.out.println(ConsoleStyles.WHITE_BG + ConsoleStyles.BLACK_UNDERLINE +"2. Remove task" + ConsoleStyles.RESET);
-        System.out.println(ConsoleStyles.WHITE_BG + ConsoleStyles.BLACK_UNDERLINE + "3. View top priority task" + ConsoleStyles.RESET);
-        System.out.println(ConsoleStyles.WHITE_BG + ConsoleStyles.BLACK_UNDERLINE + "4. View all tasks" + ConsoleStyles.RESET);
-        System.out.println(ConsoleStyles.WHITE_BG + ConsoleStyles.BLACK_UNDERLINE + "5. Exit" + ConsoleStyles.RESET);
-        System.out.print(ConsoleStyles.WHITE_BG + ConsoleStyles.BLACK_UNDERLINE + "Choose an option: " + ConsoleStyles.RESET);
+        System.out.println(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + ConsoleStyles.PURPLE_BOLD + "=== Task Rise === " + ConsoleStyles.RESET);
+        System.out.println(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "1. Add task" + ConsoleStyles.RESET);
+        System.out.println(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE +"2. Remove task" + ConsoleStyles.RESET);
+        System.out.println(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "3. View top priority task" + ConsoleStyles.RESET);
+        System.out.println(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "4. View all tasks" + ConsoleStyles.RESET);
+        System.out.println(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "5. Exit" + ConsoleStyles.RESET);
+        System.out.print(ConsoleStyles.WHITE_BG_HIGH + ConsoleStyles.BLACK_UNDERLINE + "Choose an option:" + ConsoleStyles.RESET + " " + ConsoleStyles.RESET);
     }
     // ANSI CODES ADDED ON DEC 28TH 2025 @21:40.
-    private static class ConsoleStyles { //inherently static
-        // Reset
+    static class ConsoleStyles { //inherently static (package private)
+        // Reset To Default Scheme
         public static final String RESET = "\u001B[0m";
 
-        // REGULAR COLORS
+        // Normal Colors
         public static final String BLACK = "\u001B[0;30m";
         public static final String RED = "\u001B[0;31m";
         public static final String GREEN = "\u001B[0;32m";
@@ -166,7 +176,7 @@ public class Main {
         public static final String CYAN = "\u001B[0;36m";
         public static final String WHITE = "\u001B[0;37m";
 
-        //
+        // Bold
         public static final String BLACK_BOLD = "\u001B[1;30m";
         public static final String RED_BOLD = "\u001B[1;31m";
         public static final String GREEN_BOLD = "\u001B[1;32m";

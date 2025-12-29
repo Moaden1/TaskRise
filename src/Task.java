@@ -90,7 +90,7 @@ public class Task implements Comparable<Task> {
 
     public String getDescription() {
         return this.desc;
-    }
+    } //unused
 
     public int getRelevance() {
         return this.relevance;
@@ -116,9 +116,10 @@ public class Task implements Comparable<Task> {
     }
 
     public void printTaskDetails() {
-        System.out.println("\t Task Name: " +this.taskName);
+        System.out.println("\t Task Name: " + this.taskName);
         System.out.println("\t Task PriorityScore: " + this.getPriorityScore());
         System.out.println("\t Task Description: " + this.desc);
+        System.out.print(Main.ConsoleStyles.RESET);
         System.out.println();
     }
 }
