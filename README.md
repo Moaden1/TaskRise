@@ -19,12 +19,12 @@ This repository serves primarily as a **portfolio demonstration of coding, desig
 ## Planned Features
 
 - Completed tasks tracking and management
-- Robust Error Handling
+- Robust error handling
 - Enhanced user interface and input validation
 - More unique and personable interface
 - Improved sorting, filtering, and searching
 - Persistent storage (database or file system)
-- More/Better advanced scoring and prioritization algorithms
+- More/better advanced scoring and prioritization algorithms
 - Eventually transition to a modern web application for broader accessibility and productivity improvements
 
 ## Installation 
