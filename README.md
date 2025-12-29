@@ -10,7 +10,7 @@ This repository serves primarily as a **portfolio demonstration of coding, desig
 
 ## Current Features
 
-- Users can:
+### Users can:
 - Add tasks with type, importance, relevance, and optional description
 - Remove tasks
 - View top-priority tasks
@@ -19,15 +19,19 @@ This repository serves primarily as a **portfolio demonstration of coding, desig
 ## Planned Features
 
 - Completed tasks tracking and management
+- Robust Error Handling
 - Enhanced user interface and input validation
-- Task sorting, filtering, and search
+- More unique and personable interface
+- Improved sorting, filtering, and searching
 - Persistent storage (database or file system)
-- More advanced scoring and prioritization algorithms
-- Transition to a modern web application for broader accessibility and productivity improvements
+- More/Better advanced scoring and prioritization algorithms
+- Eventually transition to a modern web application for broader accessibility and productivity improvements
 
-## Installation
+## Installation - If you'd like to test/experiment locally
 
 1. Clone the repository:
 
 ```bash
 git clone git@github.com:Moaden1/TaskRise.git
+```
+2. ....cont
