@@ -27,11 +27,11 @@ This repository serves primarily as a **portfolio demonstration of coding, desig
 - More/Better advanced scoring and prioritization algorithms
 - Eventually transition to a modern web application for broader accessibility and productivity improvements
 
-## Installation - If you'd like to test/experiment locally with this (repository) serving as a template
+## Installation 
+#### If you'd like to test/experiment locally with this (repository) serving as a template:
 
 1. Clone the repository:
 
 ```bash
 git clone git@github.com:Moaden1/TaskRise.git
 ```
-2. ....cont
