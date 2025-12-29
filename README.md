@@ -27,7 +27,7 @@ This repository serves primarily as a **portfolio demonstration of coding, desig
 - More/Better advanced scoring and prioritization algorithms
 - Eventually transition to a modern web application for broader accessibility and productivity improvements
 
-## Installation - If you'd like to test/experiment locally
+## Installation - If you'd like to test/experiment locally with this (repository) serving as a template
 
 1. Clone the repository:
 
